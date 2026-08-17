@@ -195,16 +195,26 @@
 
       device.addEventListener('gattserverdisconnected', onDisconnected);
 
-      // Request fullscreen now that Bluetooth's own permission prompt is out
-      // of the way - doing this first would consume the gesture requestDevice()
-      // needs. Silently ignored if unsupported/denied.
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      }
+      ensureFullscreen();
     } catch (err) {
       console.error(err);
       alert('Could not connect: ' + err.message);
     }
+  });
+
+  function ensureFullscreen() {
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+  }
+
+  // Fullscreen can get dropped by the OS when the app is backgrounded and
+  // resumed. Re-checking on every bomb tap is the most reliable fix, since a
+  // tap always counts as a valid user gesture the browser will honor.
+  // The visibilitychange attempt below is best-effort - browsers often block
+  // re-entering fullscreen without a fresh gesture, but it's harmless to try.
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) ensureFullscreen();
   });
 
   function onDisconnected() {
@@ -216,6 +226,7 @@
 
   bombWrap.addEventListener('click', async () => {
     if (!characteristic) return;
+    ensureFullscreen();
     try {
       await characteristic.writeValue(new TextEncoder().encode('T'));
     } catch (err) {
