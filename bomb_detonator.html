@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bomb Detonator</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#14110d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14110d;
+    --stone: #2c2820;
+    --stone-light: #3a352c;
+    --ember: #ff7a1a;
+    --ember-dim: #a64d10;
+    --blue: #29d3ff;
+    --blue-dim: #0f7aa8;
+    --red: #ff2b2b;
+    --parchment: #e8dcc0;
+    --parchment-dim: #b8a988;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; height: 100%;
+    background: radial-gradient(ellipse at center, #1c1712 0%, var(--bg) 70%);
+    color: var(--parchment);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    user-select: none;
+  }
+  body {
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    padding: 32px 20px 40px;
+    min-height: 100vh;
+  }
+  .connect-pill {
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--stone-light);
+    background: var(--stone);
+    color: var(--parchment-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .connect-pill.connected { color: var(--blue); border-color: var(--blue-dim); }
+
+  .stage {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 22px;
+    position: relative;
+  }
+
+  .bomb-wrap {
+    position: relative;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .bomb-wrap:not(.ready) {
+    pointer-events: none;
+    cursor: default;
+  }
+  .bomb-wrap:active {
+    transform: scale(0.96);
+  }
+  .bomb-img {
+    width: 100%; height: 100%;
+    padding: 26px;
+    box-sizing: border-box;
+    object-fit: contain;
+    filter: grayscale(1) brightness(0.55) opacity(0.7);
+    transition: filter 0.5s ease;
+    display: block;
+    pointer-events: none;
+  }
+  .bomb-wrap.armed .bomb-img {
+    filter: none;
+  }
+  .bomb-wrap.armed {
+    animation: glow 1.8s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(41,211,255,0.35)); }
+    50%      { filter: drop-shadow(0 0 32px rgba(41,211,255,0.85)); }
+  }
+  .bomb-wrap.boom .bomb-img {
+    filter: none;
+  }
+  .bomb-wrap.boom {
+    animation: boomFlash 2.2s ease-out forwards;
+  }
+  @keyframes boomFlash {
+    0%   { filter: drop-shadow(0 0 0px rgba(255,20,20,0)) brightness(1); }
+    6%   { filter: drop-shadow(0 0 60px rgba(255,20,20,1)) drop-shadow(0 0 26px rgba(255,90,0,0.9)) brightness(1.5); }
+    100% { filter: drop-shadow(0 0 0px rgba(255,20,20,0)) brightness(1); }
+  }
+
+  .controls {
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .controls .icon {
+    font-size: 14px;
+    color: var(--parchment-dim);
+    opacity: 0.7;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--stone-light);
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--parchment);
+    border: 2px solid var(--stone);
+    cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--parchment);
+    border: 2px solid var(--stone);
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+  <button class="connect-pill" id="connectBtn">Connect Bomb</button>
+
+  <div class="stage">
+    <div class="bomb-wrap" id="bombWrap" role="button" tabindex="0" aria-label="Detonate bomb">
+      <img class="bomb-img" src="data:image/png;base64,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" alt="Remote bomb">
+    </div>
+  </div>
+
+  <div class="controls">
+    <span class="icon">&#128266;</span>
+    <input type="range" id="volumeSlider" min="0" max="100" value="80">
+  </div>
+
+<script>
+  const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+  const CHAR_UUID    = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+
+  const connectBtn = document.getElementById('connectBtn');
+  const bombWrap = document.getElementById('bombWrap');
+  const volumeSlider = document.getElementById('volumeSlider');
+
+  let characteristic = null;
+
+  connectBtn.addEventListener('click', async () => {
+    try {
+      const device = await navigator.bluetooth.requestDevice({
+        filters: [{ services: [SERVICE_UUID] }]
+      });
+      const server = await device.gatt.connect();
+      const service = await server.getPrimaryService(SERVICE_UUID);
+      characteristic = await service.getCharacteristic(CHAR_UUID);
+
+      await characteristic.startNotifications();
+      characteristic.addEventListener('characteristicvaluechanged', handleNotify);
+
+      connectBtn.textContent = device.name || 'Connected';
+      connectBtn.classList.add('connected');
+      bombWrap.classList.add('ready');
+
+      // push current slider value once connected
+      sendVolume(volumeSlider.value);
+
+      device.addEventListener('gattserverdisconnected', onDisconnected);
+
+      // Request fullscreen now that Bluetooth's own permission prompt is out
+      // of the way - doing this first would consume the gesture requestDevice()
+      // needs. Silently ignored if unsupported/denied.
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Could not connect: ' + err.message);
+    }
+  });
+
+  function onDisconnected() {
+    connectBtn.textContent = 'Connect Bomb';
+    connectBtn.classList.remove('connected');
+    bombWrap.classList.remove('ready');
+    setState('IDLE');
+  }
+
+  bombWrap.addEventListener('click', async () => {
+    if (!characteristic) return;
+    try {
+      await characteristic.writeValue(new TextEncoder().encode('T'));
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  bombWrap.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      bombWrap.click();
+    }
+  });
+
+  volumeSlider.addEventListener('change', () => sendVolume(volumeSlider.value));
+
+  async function sendVolume(percent) {
+    if (!characteristic) return;
+    try {
+      await characteristic.writeValue(new TextEncoder().encode('V:' + Math.round(percent)));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function handleNotify(event) {
+    const value = new TextDecoder().decode(event.target.value);
+    setState(value.trim());
+  }
+
+  function setState(s) {
+    bombWrap.classList.remove('armed', 'boom');
+
+    if (s === 'ARMED') {
+      bombWrap.classList.add('armed');
+    } else if (s === 'BOOM') {
+      bombWrap.classList.add('boom');
+      setTimeout(() => {
+        bombWrap.classList.remove('boom');
+      }, 2200);
+    }
+  }
+
+  if (!navigator.bluetooth) {
+    alert('Web Bluetooth not available. Open this page in Chrome on Android.');
+  }
+</script>
+</body>
+</html>
