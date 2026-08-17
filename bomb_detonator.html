@@ -10,8 +10,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #14110d;
@@ -30,7 +28,7 @@
     margin: 0; height: 100%;
     background: radial-gradient(ellipse at center, #1c1712 0%, var(--bg) 70%);
     color: var(--parchment);
-    font-family: 'Inter', sans-serif;
+    font-family: -apple-system, system-ui, sans-serif;
     overflow: hidden;
     user-select: none;
   }
@@ -45,7 +43,7 @@
     border: 1px solid var(--stone-light);
     background: var(--stone);
     color: var(--parchment-dim);
-    font-family: 'Inter', sans-serif;
+    font-family: -apple-system, system-ui, sans-serif;
     font-size: 13px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -161,6 +159,12 @@
   </div>
 
 <script>
+  // Register the service worker so this app can run fully offline after the
+  // first successful load caches everything.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch((err) => console.error('SW register failed:', err));
+  }
+
   const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
   const CHAR_UUID    = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
