@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bomb-detonator-v3';
+const CACHE_NAME = 'bomb-detonator-v4';
 const ASSETS_TO_CACHE = [
   './bomb_detonator.html',
   './manifest.json',
