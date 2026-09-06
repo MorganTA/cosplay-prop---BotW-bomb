@@ -148,6 +148,11 @@ botw_bomb_firmware/
 
 The web app (`bomb_detonator.html`) is a Progressive Web App that runs in Chrome on Android. It communicates with the ESP32 over Web Bluetooth.
 
+You can run the detonator program right from your web browser (Chrome is recommended) or you can download the apk from this repository. (the apk just loads the site)
+https://morganta.github.io/cosplay-prop---BotW-bomb/bomb_detonator.html
+
+If you want to host it yourself follow the info down below. If your just running it as is you don't need to worry, but if you want to make changes of your own you'll need to do it.
+
 ### Hosting
 
 Web Bluetooth requires a secure origin (HTTPS or localhost). Host the app files on any free static host:
