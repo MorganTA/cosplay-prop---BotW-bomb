@@ -4,6 +4,7 @@ Here is the codes for my Breath of the Wild Remote Bomb prop. I have a phone in 
 I had to upload the HTML file to make the APK, so I might as well share it here for anyone who wants to try and make one.
 
 The project was coded with Claude AI, so feel free to modify it as you want. You might want to change the LED count, its currently set for 36 from when I was doing the initial tests.
+I also used it for most of this documentation because I am not going to be putting a lot of effort into this.
 
 
 
