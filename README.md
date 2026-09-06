@@ -1,12 +1,19 @@
 # Zelda: Breath of the Wild — Remote Bomb Prop
 
-A functional remote bomb prop inspired by Zelda: Breath of the Wild. Control it wirelessly from an Android phone over Bluetooth Low Energy. Press the button once to arm it (blue glow + appear sound), press again to detonate (red flash + explosion sound).
+Here is the codes for my Breath of the Wild Remote Bomb prop. I have a phone in my Sheikah slate, so I wanted to connect the bomb with Bluetooth to control it.
+I had to upload the HTML file to make the APK, so I might as well share it here for anyone who wants to try and make one.
+
+The project was coded with Claude AI, so feel free to modify it as you want. You might want to change the LED count, its currently set for 36 from when I was doing the initial tests.
+
+
 
 ---
+#3D Model
 
-## Demo
+This is the original model I used for the bottom and the details.
+https://www.thingiverse.com/thing:4860007
 
-> Add a photo or video of your finished prop here.
+I made it fit a 6-inch Mr.Go LED ball. I'm not vert good with modeling, I used 3D builder to modify the model. Hopefully you wont have much trouble using them. I'll add my WIP file if it helps anyone with editing, please not that it's not that great, and some parts might not fit as the finished ones do.
 
 ---
 
@@ -24,18 +31,19 @@ A functional remote bomb prop inspired by Zelda: Breath of the Wild. Control it 
 
 ## Hardware
 
-| Part | Notes |
-|---|---|
+| Part | Notes | Link |
+|---|---|---|
+| Mr.Go 6-inch RGB Color-Changing LED Ball Light | I used this for the main body | https://www.amazon.ca/dp/B01HXXUZFG?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1 |
 | ESP-WROOM-32 dev board | Any standard ESP32 Dev Module works |
-| MAX98357A I2S amp | Digital amp + DAC in one chip, no separate DAC needed |
-| Speaker | 4Ω or 8Ω, 3W |
-| WS2812B addressable LEDs | Strip or ring, 36 LEDs |
-| LiPo battery | 3.7V |
-| TP4056 charge module | For charging the LiPo via USB |
-| MT3608 boost converter | Steps LiPo voltage up to 5V |
-| Latching push button switch | Inline on the 5V power rail for on/off |
-| 330Ω resistor | In series on the WS2812B data line |
-| 470–1000µF capacitor | Across the 5V/GND rail near the LED strip |
+| MAX98357A I2S amp | Digital amp + DAC in one chip, no separate DAC needed | https://www.aliexpress.com/item/1005008274847319.html?spm=a2g0o.productlist.main.2.7475J63QJ63QeW&algo_pvid=3bfe5ca6-8671-4d3f-bcce-ba044f5e4c99&algo_exp_id=3bfe5ca6-8671-4d3f-bcce-ba044f5e4c99-1&pdp_ext_f=%7B%22order%22%3A%22888%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21CAD%212.09%211.75%21%21%211.48%211.24%21%402103081117887083070354697e0d3e%2112000059729175471%21sea%21CA%21192943676%21X%211%210%21n_tag%3A-29919%3Bd%3A555fafe1%3Bm03_new_user%3A-29895&curPageLogUid=RT5BDc2KgPdG&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008274847319%7C_p_origin_prod%3A |
+| Speaker | 4Ω or 8Ω, 3W | I had mine laying around. Its about 53mmx53mmx24mm |
+| WS2812B addressable LEDs | Strip or ring, 36 LEDs | |
+| LiPo battery | 3.7V | I just took the one from the Mr.Go light |
+| Battery Charging & Boost Converter | I had some of these left over and it saves on space not needing two boards | https://www.aliexpress.com/item/1005005108273423.html?spm=a2g0o.order_list.order_list_main.82.6e0f1802KXwK5v |
+| SPDT 1P2T toggle switch | 8.5mm x 3.5mm handle 3mm | https://www.aliexpress.com/item/1005010111050912.html?spm=a2g0o.productlist.main.2.3b74DOMkDOMkgG&algo_pvid=1fa9fc90-69cb-4282-8676-8c79fcbe9b48&algo_exp_id=1fa9fc90-69cb-4282-8676-8c79fcbe9b48-1&pdp_ext_f=%7B%22order%22%3A%22282%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21CAD%2110.79%215.40%21%21%2151.34%2125.67%21%402101d2e717887074110763729e0efc%2112000051182229709%21sea%21CA%21192943676%21X%211%210%21n_tag%3A-29919%3Bd%3A555fafe1%3Bm03_new_user%3A-29895&curPageLogUid=42OeHV6nOA88&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005010111050912%7C_p_origin_prod%3A |
+| 100kΩ resistor | for the MAX98357A audio chip to increase volume | |
+| 330Ω resistor | In series on the WS2812B data line | Honestly I didn't put this in. but its recommended |
+| 470–1000µF capacitor | Across the 5V/GND rail near the LED strip | I didn't install this either |
 
 ---
 
@@ -100,8 +108,6 @@ All GND connections share a common rail. Place a 470–1000µF capacitor across 
 | PSRAM | Disabled |
 
 ### Audio files
-
-This project does not include audio — you must supply your own WAV files (royalty-free sources like [freesound.org](https://freesound.org) work well, or record your own).
 
 Prepare two files:
 - `Bomb_appear01.wav` — played when the bomb is armed
@@ -215,6 +221,3 @@ Use [PWABuilder](https://www.pwabuilder.com) to generate a signed APK:
 
 ---
 
-## License
-
-This project is for personal/educational use. Audio files are not included — source your own royalty-free sounds. Zelda and Breath of the Wild are trademarks of Nintendo.
