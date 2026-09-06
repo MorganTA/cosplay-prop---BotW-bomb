@@ -11,7 +11,7 @@ I also used it for most of this documentation because I am not going to be putti
 ---
 ## 3D Model
 
-This is the original model I used for the bottom and the details.
+This is the original model I used.
 https://www.thingiverse.com/thing:4860007
 
 I made it fit a 6-inch Mr.Go LED ball. I'm not vert good with modeling, I used 3D builder to modify the model. Hopefully you wont have much trouble using them. I'll add my WIP file if it helps anyone with editing, please not that it's not that great, and some parts might not fit as the finished ones do.
