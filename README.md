@@ -1,4 +1,5 @@
 # Zelda: Breath of the Wild — Remote Bomb Prop
+https://www.instagram.com/reel/DdAoqvsIL6p/?stkn=bnQzZnl1bjlta2x1
 
 Here is the codes for my Breath of the Wild Remote Bomb prop. I have a phone in my Sheikah slate, so I wanted to connect the bomb with Bluetooth to control it.
 I had to upload the HTML file to make the APK, so I might as well share it here for anyone who wants to try and make one.
