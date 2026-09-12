@@ -44,8 +44,8 @@ I modified it fit a 6-inch Mr.Go LED ball. I'm not vert good with modeling, I us
 | Battery Charging & Boost Converter | I had some of these left over and it saves on space not needing two boards | https://www.aliexpress.com/item/1005005108273423.html?spm=a2g0o.order_list.order_list_main.82.6e0f1802KXwK5v |
 | SPDT 1P2T toggle switch | 8.5mm x 3.5mm handle 3mm | https://www.aliexpress.com/item/1005010111050912.html?spm=a2g0o.productlist.main.2.3b74DOMkDOMkgG&algo_pvid=1fa9fc90-69cb-4282-8676-8c79fcbe9b48&algo_exp_id=1fa9fc90-69cb-4282-8676-8c79fcbe9b48-1&pdp_ext_f=%7B%22order%22%3A%22282%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21CAD%2110.79%215.40%21%21%2151.34%2125.67%21%402101d2e717887074110763729e0efc%2112000051182229709%21sea%21CA%21192943676%21X%211%210%21n_tag%3A-29919%3Bd%3A555fafe1%3Bm03_new_user%3A-29895&curPageLogUid=42OeHV6nOA88&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005010111050912%7C_p_origin_prod%3A |
 | 100kΩ resistor | for the MAX98357A audio chip to increase volume | |
-| 330Ω resistor | In series on the WS2812B data line | Honestly I didn't put this in. but its recommended |
-| 470–1000µF capacitor | Across the 5V/GND rail near the LED strip | I didn't install this either |
+| 330Ω resistor | In series on the WS2812B data line |  |
+| 470–1000µF capacitor | Across the 5V/GND rail near the LED strip |  |
 
 ---
 
